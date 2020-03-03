@@ -14,7 +14,14 @@
     "fetch": "rimraf ./static/assets/ && mkdirp ./static/assets/ && node ./scripts/fetchMediaLibraryAssets.js",
     "dist": "npm run build-gui && npm run fetch && npm run compile -p && node ./scripts/electron-builder-wrapper.js",
     "dist:dir": "npm run dist -- --dir -c.compression=store -c.mac.identity=null",
-    "lint": "eslint --cache --color --ext .jsx,.js ."
+    "lint": "eslint --cache --color --ext .jsx,.js .",
+    "build:osx": "build --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "build --linux --ia32",
+    "build:linux64": "build --linux --x64",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "build --win --ia32",
+    "build:win64": "build --win --x64"
   },
   "repository": {
     "type": "git",
@@ -63,5 +70,106 @@
   },
   "resolutions": {
     "upath": "^1.0.5"
-  }
+  },"build": {
+
+    "productName": "scratch", 
+
+    "appId": "goldrabbit.maunzi", 
+
+    "asar": true,
+
+    "protocols": {
+
+         "name": "productTest",
+
+         "schemes": [
+
+              "productTest"
+
+         ]
+
+    },
+
+    "mac": {
+
+         "target": [
+
+              "default"
+
+         ],
+
+         "icon": "./src/icon/ScratchDesktop.png"
+
+    },
+
+    "dmg": { 
+         "title": "tournant",
+
+         "icon": "./src/icon/ScratchDesktop.png"
+
+    },
+
+    "win": { 
+
+        "target": [
+
+              "zip",
+
+              "nsis"
+
+         ],
+
+         "icon": "./src/icon/ScratchDesktop.png"
+
+    },
+
+    "linux": { 
+
+         "target": [
+
+               "AppImage",
+
+               "deb",
+
+               "rpm",
+
+               "zip",
+
+               "tar.gz"
+
+         ],
+
+         "icon": "./src/icon/ScratchDesktop.png"
+
+    },
+
+    "nsis": {
+
+         "oneClick": false,
+
+         "allowToChangeInstallationDirectory": false, 
+
+         "installerLanguages": [
+
+              "en_US",
+
+              "ko_KR"
+
+         ],
+
+         "language": "1042"
+
+    },
+
+    "directories": {
+
+         "buildResources": "resources/installer/",
+
+         "output": "build/", 
+
+         "app": "."
+
+    }
+
+}
 }
